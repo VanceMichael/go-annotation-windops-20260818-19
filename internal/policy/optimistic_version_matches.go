@@ -13,7 +13,7 @@ func EvaluateOptimisticVersionMatches(ctx Context) (Result, error) {
 		return Result{}, fault.New(fault.CodeInvalid, "policy.optimistic_version", "versions must be positive")
 	}
 	versionDelta := ctx.Version - ctx.ExpectedVersion
-	if versionDelta < 0 {
+	if versionDelta != 0 {
 		result := deny("version_conflict", "record changed since it was read")
 		result.Quantity = ctx.Version
 		return result, nil
